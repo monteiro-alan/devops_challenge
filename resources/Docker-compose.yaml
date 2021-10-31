@@ -19,8 +19,6 @@ services:
       PGDATA: /data/postgres
     volumes:
        - clg-db:/data/postgres
-    ports:
-      - "5432:5432"
     networks:
       - clg-network
     restart: unless-stopped
@@ -32,11 +30,11 @@ services:
       dockerfile: Dockerfile
       target: ${NODE_ENV}
     volumes:
-      - ../api:/usr/src/app
+      - ../api:/usr/src/app/api
     depends_on:
       - clg-db
-    ports:
-      - 8081:8081
+    expose:
+      - "8081"
     restart: unless-stopped
     environment:
       PORT: ${API_PORT}
@@ -57,10 +55,10 @@ services:
     depends_on:
       - clg-api
     volumes:
-      - ../web:/usr/src/app
+      - ../web:/usr/src/app/web
     ports:
       - 8080:8080
-      - 3000:3000
+    restart: unless-stopped
     environment:
       NODE_ENV: ${NODE_ENV}
       PORT: ${PORT}

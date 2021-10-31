@@ -1,18 +1,25 @@
 FROM node:16.11-bullseye-slim AS builder
 WORKDIR /usr/src/app
 COPY package.json ./
+
+FROM builder AS dev
+ENV NODE_ENV=development
 RUN npm install
 
-FROM node:16.11-bullseye-slim AS intermediate
-WORKDIR /usr/src/app
-COPY --from=builder /usr/src/app /usr/src/app
+FROM builder AS prod
+ENV NODE_ENV=production
+RUN npm install
 
-FROM intermediate AS development
-ENV env=development
+FROM node:16.11-bullseye-slim AS development
+WORKDIR /usr/src/app
+ENV NODE_ENV=development
+COPY --from=dev /usr/src/app /usr/src/app
 COPY . .
 CMD [ "npm", "run", "dev:watch" ]
 
-FROM intermediate AS production
-ENV env=production
+FROM node:16.11-bullseye-slim AS production
+WORKDIR /usr/src/app
+ENV NODE_ENV=production
+COPY --from=prod /usr/src/app /usr/src/app
 COPY . .
 CMD [ "npm", "start" ]

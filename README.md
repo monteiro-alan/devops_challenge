@@ -1,4 +1,36 @@
-# DevOps Challenge
+# Done by Álan Monteiro 
+- Created ./resources folder
+- Created Dockerfiles from services
+- Created Docker-compose files
+- Changed DB connection and query in ./api/app.js
+- Created .dockerignore files
+- Added nodemon in package.json files for debug
+
+# Running
+- Clone the project:
+````shell
+git clone https://github.com/monteiro-alan/devops_challenge.git
+````
+
+- Change to dir "resources": 
+````shell
+cd devops_challenge/resources
+````
+
+- Create a ".env" file with environment variables. You can use ".env.example" as an example: 
+````shell
+cp .env.example .env
+````
+
+- Start the apps: 
+````shell
+docker-compose up -d
+````
+
+- Open a web browser and type "http://localhost:8080/" to test the app
+
+
+# About DevOps Challenge
 
 - This repo contains code for a multilayer application.
 
@@ -19,36 +51,3 @@
 - It will count the quality of 'Dockerfile', 'docker-compose.yml'
 - Extra points if you use terraform and are in good practice
 - Extra points if you use ansible and are well structured
-
-
-
-# Done by Álan Monteiro 
-- Created ./resources folder
-- Created Dockerfiles from services
-- Created Docker-compose files
-- Changed DB connection and query in ./api/app.js
-- Created .dockerignore files
-- Added nodemon in package.json files for debug
-
-# Running
-- Clone the project:
-````shell
-git clone https://github.com/monteiro-alan/devops_challenge.git
-````
-
-- Change to dir "resources": 
-````shell
-cd resources
-````
-
-- Create a ".env" file with environment variables. You can use ".env.example" as an example: 
-````shell
-cp .env.example .env
-````
-
-- Start the apps: 
-````shell
-docker-compose up -d
-````
-
-- Open a web browser and type "http://localhost:8080/" to test the app
