@@ -31,8 +31,24 @@
 - Added nodemon in package.json files for debug
 
 # Running
-- Clone the project: Ex. git clone https://github.com/monteiro-alan/devops_challenge.git
-- Change to dir "resources": cd resources
-- Create a ".env" file with environment variables. You can use ".env.example" as an example: cp .env.example .env
-- Start the apps: docker-compose up -d
+- Clone the project:
+````shell
+git clone https://github.com/monteiro-alan/devops_challenge.git
+````
+
+- Change to dir "resources": 
+````shell
+cd resources
+````
+
+- Create a ".env" file with environment variables. You can use ".env.example" as an example: 
+````shell
+cp .env.example .env
+````
+
+- Start the apps: 
+````shell
+docker-compose up -d
+````
+
 - Open a web browser and type "http://localhost:8080/" to test the app
