@@ -19,3 +19,20 @@
 - It will count the quality of 'Dockerfile', 'docker-compose.yml'
 - Extra points if you use terraform and are in good practice
 - Extra points if you use ansible and are well structured
+
+
+
+### Done by Álan Monteiro ###
+- Created ./resources folder
+- Created Dockerfiles from services
+- Created Docker-compose files
+- Changed DB connection and query in ./api/app.js
+- Created .dockerignore files
+- Added nodemon in package.json files for debug
+
+# Running
+- Clone the project: Ex. git clone https://github.com/monteiro-alan/devops_challenge.git
+- Change to dir "resources": cd resources
+- Create a ".env" file with variable environments. You can use ".env.example" as an example: cp .env.example .env
+- Start the apps: docker-compose up -d
+- Open a web browser and type "http://localhost:8080/" to test the app

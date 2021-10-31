@@ -1,0 +1,48 @@
+version: "3"
+
+volumes:
+  clg-db:
+    name: clg-db
+
+networks:
+  clg-network:
+    name: clg-network
+
+services:
+  clg-db:
+    container_name: clg-db
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: clg-api
+      PGDATA: /data/postgres
+    volumes:
+       - clg-db:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - clg-network
+    restart: unless-stopped
+
+  clg-api:
+    image: clg-api:0.1
+    build:
+      context: .
+      target: dev
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - clg-db
+    ports:
+      - 8081:8081
+    restart: unless-stopped
+    environment:
+      PORT: 8081
+      DB_USER: "root"
+      DB_HOST: "clg-db"
+      DB_DB: "clg-api"
+      DB_PORT: 5432
+      DB_PASS: "root"
+    networks:
+      - clg-network

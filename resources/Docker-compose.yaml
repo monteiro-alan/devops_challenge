@@ -1,0 +1,69 @@
+version: "3"
+########
+volumes:
+  clg-db:
+    name: clg-db
+#########
+networks:
+  clg-network:
+    name: clg-network
+##########
+services:
+  clg-db:
+    container_name: clg-db
+    image: postgres
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DB}
+      PGDATA: /data/postgres
+    volumes:
+       - clg-db:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - clg-network
+    restart: unless-stopped
+##########
+  clg-api:
+    image: clg-api:${VERSION}
+    build:
+      context: ../api
+      dockerfile: Dockerfile
+      target: ${NODE_ENV}
+    volumes:
+      - ../api:/usr/src/app
+    depends_on:
+      - clg-db
+    ports:
+      - 8081:8081
+    restart: unless-stopped
+    environment:
+      PORT: ${API_PORT}
+      DB_USER: ${DB_USER}
+      DB_HOST: clg-db
+      DB_DB: ${DB_DB}
+      DB_PORT: 5432
+      DB_PASS: ${DB_PASSWORD}
+    networks:
+      - clg-network
+###########
+  clg-web:
+    image: clg-web:${VERSION}
+    build:
+      context: ../web
+      dockerfile: Dockerfile
+      target: ${NODE_ENV}
+    depends_on:
+      - clg-api
+    volumes:
+      - ../web:/usr/src/app
+    ports:
+      - 8080:8080
+      - 3000:3000
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      PORT: ${PORT}
+      API_HOST: ${API_HOST}
+    networks:
+      - clg-network

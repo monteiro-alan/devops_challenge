@@ -1,0 +1,24 @@
+version: "3"
+
+networks:
+  clg-network:
+    name: clg-network
+
+services:
+  web:
+    image: clg-dev:0.1
+    build:
+      context: .
+      target: dev
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - 8080:8080
+      - 9229:9229
+      - 3000:3000
+    environment:
+      PORT: 8080
+      API_HOST: "http://clg-api:8081"
+    networks:
+      - clg-network
+

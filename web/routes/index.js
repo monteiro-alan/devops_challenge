@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
         return res.status(500).send('error running request to ' + api_url);
       } else {
         res.render('index', {
-          title: 'Nice App' ,
+          title: 'Nice App: ' + process.env.NODE_ENV ,
           request_uuid: body.request_uuid,
           time: body.time
         });
