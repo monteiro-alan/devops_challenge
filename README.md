@@ -22,7 +22,7 @@
 
 
 
-### Done by Álan Monteiro ###
+# Done by Álan Monteiro 
 - Created ./resources folder
 - Created Dockerfiles from services
 - Created Docker-compose files
