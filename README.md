@@ -1,10 +1,9 @@
 # Done by Álan Monteiro 
-- Created ./resources folder
-- Created Dockerfiles from services
-- Created Docker-compose files
-- Changed DB connection and query in ./api/app.js
-- Created .dockerignore files
-- Added nodemon in package.json files for debug
+- Created `Dockerfiles` from services
+- Created `docker-compose` files
+- Changed DB connection and query in `./api/app.js`
+- Created `.dockerignore` files
+- Added nodemon in `package.json` files for debug
 
 # Running
 - Clone the project:
@@ -12,17 +11,7 @@
 git clone https://github.com/monteiro-alan/devops_challenge.git
 ````
 
-- Change to dir "resources": 
-````shell
-cd devops_challenge/resources
-````
-
-- Create a ".env" file with environment variables. You can use ".env.example" as an example: 
-````shell
-cp .env.example .env
-````
-
-- Start the apps: 
+- Run the applications: 
 ````shell
 docker-compose up -d
 ````

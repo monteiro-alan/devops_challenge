@@ -13,9 +13,9 @@ services:
     container_name: clg-db
     image: postgres
     environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_DB}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-clg_api}
       PGDATA: /data/postgres
     volumes:
        - clg-db:/data/postgres
@@ -24,44 +24,43 @@ services:
     restart: unless-stopped
 ##########
   clg-api:
-    image: clg-api:${VERSION}
+    image: clg-api:${VERSION:-0.1}
     build:
-      context: ../api
+      context: ./api
       dockerfile: Dockerfile
-      target: ${NODE_ENV}
+      target: ${NODE_ENV:-development}
     volumes:
-      - ../api:/usr/src/app/api
+      - ./api:/usr/src/app/api
     depends_on:
       - clg-db
     expose:
-      - ${API_PORT}
+      - 8081
     restart: unless-stopped
     environment:
-      PORT: ${API_PORT}
-      DB_USER: ${DB_USER}
+      PORT: ${API_PORT:-8081}
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASS: ${DB_PASSWORD:-postgres}
       DB_HOST: clg-db
-      DB_DB: ${DB_DB}
-      DB_PORT: 5432
-      DB_PASS: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME:-clg_api}
+      DB_PORT: ${DB_PORT:-5432}
     networks:
       - clg-network
 ###########
   clg-web:
-    image: clg-web:${VERSION}
+    image: clg-web:${VERSION:-0.1}
     build:
-      context: ../web
-      dockerfile: Dockerfile
-      target: ${NODE_ENV}
+      context: ./web
+      target: ${NODE_ENV:-development}
     depends_on:
       - clg-api
     volumes:
-      - ../web:/usr/src/app/web
+      - ./web:/usr/src/app/web
     ports:
       - 8080:8080
     restart: unless-stopped
     environment:
-      NODE_ENV: ${NODE_ENV}
-      PORT: ${PORT}
-      API_HOST: ${API_HOST}
+      NODE_ENV: ${NODE_ENV:-development}
+      PORT: ${WEB_PORT:-8080}
+      API_HOST: ${API_HOST:-http://clg-api:8081}
     networks:
       - clg-network
